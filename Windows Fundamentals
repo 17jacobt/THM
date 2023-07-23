@@ -1,0 +1,4 @@
+Windows uses NTFS (New Technology File System) for their file system, they uised to use FAT16/32 (File Allocation Table).
+Alternate Data Streams (ADS) is a file attribute for NTFS
+  -ADS are typically hidden and used alot in malware but its not walways bad
+  -You can use 3rd party executables or Powershell to see ADS files.
