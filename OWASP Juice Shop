@@ -1,0 +1,20 @@
+OWASP Juice Shop
+----------------
+
+When attacking a website in burpsuite that are vulnerable to SQL injection
+You can intercept the traffic in burp and change the email to ' or 1=1-- 
+Which basically makes the statement true because 1=1 and then the -- comments out
+anything the system tries to reply to it.
+you can also try putting their email benny@juice-sh.op-- Which will make the email true and then
+comment out anything that comes after.
+
+You can use Intruder in Burp to Brute force logins
+If you get to the rquest where you have login information and replace the password
+with §§ you can go back into Burp and put a wordlist as the payload to brute force
+
+Poison Null Bytes are adding %00 into the url to bypass download resrictions.
+In this example we were trying to download a json.bak file and we could only download .md or .pdf
+to bypass this in the url we changed it from /package.json.bak to /package.json.bak%2500.md
+so everything after the %2500 gets nulled out which makes this work.  You need tyo change the url ito url encoded 
+format which is how you get the %2500
+
