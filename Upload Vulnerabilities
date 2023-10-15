@@ -1,0 +1,70 @@
+Overwriting Existing Files
+--------------------------
+Usually websites should have rules in place where you shouldnt be able to write to the webpage.
+If you can write to the web page, you can look at the source code and find the name of the image and then if the website has an uplaod section
+you can upload a different image witht he same name as the existing image and it could overwrite it.
+
+Remote Code Execution
+----------------------
+Websites are not vulnerable if the application is routed.  This means the application is routing programatically instead of using the file=-system.
+There are two ways to achieve RCE on webservers: webshells and reverse/bind shells
+reverse/bind shells are ideal
+
+*Web Shells*
+
+If you have found a webpage with an upload form 
+start a gobuster scan: gobuster dir -u website -w (wordlist)/usr/share/wordlists/dirbuster/directory-list
+If you find an uploads directory you can assume the uploads will go into there. You can test thius by uploading an image and checking
+
+Next you need to find what language the webserver is running on, sometimes its PHP.
+If it is PHP you can upload this script as a php file
+
+<?php
+    echo system($_GET["cmd"]);
+?>
+
+Then you can use this as a webshell into cmd.
+
+*Reverse Shells*
+
+Reverse shells are very similar to webshells
+Theres a script called ubiquitous Pentest Monkey reverse shell comes with Kali Linux and you need to edit line 49 to the machine youre attacking.
+
+The next step you need to do is run netcat using the command: nc -lvnp 1234
+When you upload this script to the website your netcat should listen and catch the shell.
+
+Filtering
+----------
+Everything before this is usally for insecure websites.  This will tell you how to get around those defences
+JavaScript is a client side scripting language.  This means the filtering usually happens before it gets to the server.
+Serverside is more difficult to bypass because you cant see the code.  You have to form the payload around the filters.
+
+*different kinds of filters*
+-Extension Validation
+This checks the file extension and usually either has a whitelist of extensions they allow or blacklist of extensions they dont allow.
+
+-file type filtering
+this is a more intensive check for extensions
+
+  -MIME(Multipurpose Internet Mail Extension) validation - orighinalkly used in emails but now used in HTTPS, it adds a header the displays the file type.
+  this is easy to bypass
+
+  -Magic Number Validation: This looks at the first bytes in a file which tells you what file type it is.  This is difficult to fake but could be done.
+
+-File Length Filtering: This checks the length of the file oor how big it is.  They know relatively what size files should be uploaded and prevents you from uploading anything bigger, potentially starving resources.
+
+File Content Monitoring:   This is one of the more complicated fileters, but it essentially uses MIME and the Magic Number to check.
+
+Bypass Client Side
+-------------------
+Four ways to bypass client side file upload
+1. Turn off JavaScript - this can work if it doesnt break other things on the website
+2. Intercept and modify the incoming page.  You can intercept using burp and strip out the JavaScript filter
+  -In the source code, sometimes it will show what filkter is being used.  if not you can use trial and error and see what file types can be used.
+  -While intercepting in Burp you can use the 'Action" Do Intercept > Response to this request and after you forward the packet you can see the filter and delete that out.
+  -If the filter isnt directly in the source code you can find it by going to "Options" tab at the top of the Burpsuite window, then under the "Intercept Client Requests" section, edit the condition of the first line to remove ^js$|
+3. Intercept and modiofy the file upload. As the previous bypass works before the webpage is loaded, this intercepts the file uplaod after its passed.
+4. Dend the fiule directly to the ipload point.  You can use burp for a successful upload(to see the parameters being used) and then use curl to upload directly.  curl -X POST -F "submit:<value>" -F "<file-parameter>:@<path-to-file>" <site>
+
+Bypassing Server-Side Filtering: File Extensions
+-------------------------------------------------
