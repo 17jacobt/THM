@@ -68,3 +68,17 @@ Four ways to bypass client side file upload
 
 Bypassing Server-Side Filtering: File Extensions
 -------------------------------------------------
+To get around server side filtering you kind of have to guess or use trial and error to get around filters
+In the try hack me example, they show the code but the filter blacklists php and phtml files.  This could be bypassed by using a .php3, .php4, .php5, .php7, .phps, .php-s, .pht and .phar file
+because it only checks for .php
+
+In the second example, they tried to attack the website without seeing the code.
+You can start by uploading different files to see what it takes and what it doesnt take.  From the previous example we noticed it checked for .jpg after the .
+This can be bypassed by putting the shell script as shell.jpg.php
+
+Bypassing Server-Side Filtering: Magic Numbers
+-----------------------------------------------
+To change the magic numbers of the file:
+1. Go to this wiki to find a valid files hex(magic numbers) https://en.wikipedia.org/wiki/List_of_file_signatures
+2. Edit the script and add 4 "A's" AAAA and then save that and open the file up in hexeditor or some type of hex editor
+3. The 4 A's AAAA show up as 41 41 41 41 in the hex editor, change those numbers to the valid files magic numbers.
