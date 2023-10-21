@@ -1,0 +1,21 @@
+Network File System(NFS)
+Allows all operating systems to share files and directories over the network. It does this by the client requesting to mount a directory from a remote 
+host on a local directory just the same way it can mount a physical device. The mount service will then act to connect to the relevant mount daemon using 
+RPC. The server checks if the user has permission to mount whatever directory has been requested. It will then return a file handle which uniquely identifies 
+each file and directory that is on the server. If someone wants to access a file using NFS, an RPC call is placed to NFSD (the NFS daemon) on the server. 
+This call takes parameters such as:
+-The file handle
+-The name of the file to be accessed
+-he user's, user ID
+-The user's group ID
+
+Enumerating NFS
+----------------
+You need the package nfs-common on your local machine.  This will allow you to use showmount and mount.nfs.
+You can install this by using the command: sudo apt install nfs-common
+
+Use nmap scan for port #: nmap -A -p- ipaddress
+
+Create a directory so you can mount
+
+use this command to mount: sudo mount -t nfs IP:share /tmp/mount/ -nolock
