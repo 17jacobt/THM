@@ -1,2 +1,12 @@
-To search for networks you can turn your network card in monitor mode by the command: sudo airodump-ng <network interface>
+SSID: name of wi-fi
+ESSID: SSID that can apply to multiple networks
+BSSID: MAC address
+WPA2-PSK: Wi-Fi with a shared password
+WPA2-EAP: WiFi that you have to authenticate with a username and password, sent to RADIUS server.
+RADIUS: server for authenticatinhg server
+
+WEP = Wired Equivalent Privacy
+
+
+To search for networks you can turn your network card in monitor mode by the command: sudo airomon-ng <network interface> (usually wlan0 or wlo1)
 Once you find a network back out and use the command: sudo airodump-ng <network interface> --bssid <AP>
